@@ -25,5 +25,5 @@ void heureUTC() {
   lcd.setCursor(0, 1);
   lcd.print("UTC +"); lcd.print(nbrheure);
   lcd.setCursor(0, 2);
-  lcd.print(TIME);
+  lcd.print(Time);
 }

@@ -287,4 +287,5 @@ void print_wday(byte wday)
 
 }
 
+//reset
 void(* resetFunc) (void) = 0;

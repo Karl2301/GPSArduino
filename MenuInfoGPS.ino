@@ -22,3 +22,5 @@ void menuinfogps2() {
   lcd.print("distance: "); lcd.print(distanceparcouru, 2); lcd.print(" Km");
   Serial.print(distanceparcouru, 2);
 }
+
+//2(km) . 0(centaine de metre) 0(dizaine de metre) 0(metre)

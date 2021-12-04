@@ -67,13 +67,11 @@ void setup()
   lcd.setCursor(3, 1);
   lcd.print("GPS Tracker V3");
 
-  //init gps
-  //Serial3.begin(GPSBaud);
-
   delay(1000);
   //init IR
   receiver.enableIRIn();
   receiver.blink13(true);
+  
   //on vérifie si la carte SD est bien la
   if (!SD.begin(chipSelect)) {
     Serial.println(F("SD absente ou HS. stop."));
@@ -89,18 +87,16 @@ void setup()
     }
   }
   bleu();
+  
   //on lit et stocke le mot de passe dans le fichier /p/code.txt
   String codegps = SD.open("p/code.txt", FILE_READ).readStringUntil('\r');
   codeverif = codegps;
-
   String heureutc = SD.open("p/heure.txt", FILE_READ).readStringUntil('\r');
   nbrheure = heureutc.toInt();
-
   lonDesti = SD.open("p/d/lon.txt", FILE_READ).readStringUntil('\r');
-
   latDesti = SD.open("p/d/lat.txt", FILE_READ).readStringUntil('\r');
-
   String trajetencour = SD.open("p/t/tjtcour.txt", FILE_READ).readStringUntil('\r');
+  
   if (trajetencour != 0) {
     trajet = 2;
     nameFile = trajetencour;

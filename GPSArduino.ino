@@ -274,7 +274,7 @@ void print_wday(byte wday)
 {
   switch (wday)
   {
-
+  // jours
     case 1:  Serial.print("Dimanche"); jour = "Dimanche";  break;
     case 2:  Serial.print("Lundi"); jour = "Lundi";  break;
     case 3:  Serial.print("Mardi"); jour = "Mardi";  break;
@@ -287,4 +287,5 @@ void print_wday(byte wday)
 
 }
 
+//reset
 void(* resetFunc) (void) = 0;

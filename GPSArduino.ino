@@ -50,7 +50,7 @@ File myFile;
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Adafruit GPS library basic parsing test!");
   //init les led rgb
   pinMode(redPin, OUTPUT);
@@ -67,6 +67,9 @@ void setup()
   lcd.setCursor(3, 1);
   lcd.print("GPS Tracker V3");
 
+  //init GPS
+  Serial3.begin(9600);
+  
   delay(1000);
   //init IR
   receiver.enableIRIn();
@@ -140,8 +143,8 @@ void loop()                     // run over and over again
   if (code == 1) {
     IR();
     //on récupère les info du gps
-    while (Serial.available() > 0)
-      if (gps.encode(Serial.read()))
+    while (Serial3.available() > 0)
+      if (gps.encode(Serial3.read()))
         if (millis() > 5000 && gps.charsProcessed() < 10)
         {
           Serial.println(F("No GPS detected: check wiring."));

@@ -1,7 +1,7 @@
 void menuinfogps1() {
   lcd.clear();
   lcd.setCursor(2, 0);
-  lcd.print("Info GPS :");
+  lcd.print("Info:");
   lcd.setCursor(0, 1);
   lcd.print("Lat: "); lcd.print(gps.location.lat(), 8);
   lcd.setCursor(0, 2);
@@ -21,4 +21,14 @@ void menuinfogps2() {
   lcd.setCursor(0, 3);
   lcd.print("distance: "); lcd.print(distanceparcouru, 2); lcd.print(" Km");
   Serial.print(distanceparcouru, 2);
+}
+
+void menuinfogps3() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Humidite: "); lcd.print(h); lcd.print(" %");
+  lcd.setCursor(0, 1);
+  lcd.print("Temperature: "); lcd.print(t); lcd.print(" C");
+  lcd.setCursor(0, 2);
+  lcd.print("Temp ress.: "); lcd.print(tr); lcd.print(" C");
 }

@@ -3,7 +3,7 @@ void menuSelct1() {
   lcd.setCursor(0, 0);
   lcd.print(">Time/Date");
   lcd.setCursor(0, 1);
-  lcd.print(" GPS Info");
+  lcd.print(" information");
   lcd.setCursor(0, 2);
   lcd.print(" Nouveau Trajet");
   lcd.setCursor(0, 3);
@@ -15,7 +15,7 @@ void menuSelct2() {
   lcd.setCursor(0, 0);
   lcd.print(" Time/Date");
   lcd.setCursor(0, 1);
-  lcd.print(">GPS Info");
+  lcd.print(">information");
   lcd.setCursor(0, 2);
   lcd.print(" Nouveau Trajet");
   lcd.setCursor(0, 3);
@@ -27,7 +27,7 @@ void menuSelct3() {
   lcd.setCursor(0, 0);
   lcd.print(" Time/Date");
   lcd.setCursor(0, 1);
-  lcd.print(" GPS Info");
+  lcd.print(" information");
   lcd.setCursor(0, 2);
   lcd.print(">Nouveau Trajet");
   lcd.setCursor(0, 3);
@@ -39,7 +39,7 @@ void menuSelct4() {
   lcd.setCursor(0, 0);
   lcd.print(" Time/Date");
   lcd.setCursor(0, 1);
-  lcd.print(" GPS Info");
+  lcd.print(" information");
   lcd.setCursor(0, 2);
   lcd.print(" Nouveau Trajet");
   lcd.setCursor(0, 3);

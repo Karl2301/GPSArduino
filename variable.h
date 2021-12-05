@@ -116,3 +116,6 @@ int calculeladistance = 0;
 float distanceparcouru = 0.0;
 int nbrheure;
 int MaxSat = 0;
+float h;
+float t;
+float tr;

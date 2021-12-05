@@ -8,7 +8,7 @@ void IR() {
             menu --;
             rafmenu();
           } else if (menuselector == 2) {
-            infogps = 1;
+            infogps --;
           } else if (menuselector == 3) {
             trajet = 0;
           } else if (menuselector == 6) {
@@ -152,7 +152,7 @@ void IR() {
             menu ++;
             rafmenu();
           } else if (menuselector == 2) {
-            infogps = 2;
+            infogps ++;
           } else if (menuselector == 6) {
             menuparam = 2;
           } else if (menuselector == 5) {

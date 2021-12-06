@@ -1,9 +1,9 @@
 void menuSelct1() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print(">Time/Date");
+  lcd.print(">Heure/Date");
   lcd.setCursor(0, 1);
-  lcd.print(" information");
+  lcd.print(" Information GPS");
   lcd.setCursor(0, 2);
   lcd.print(" Nouveau Trajet");
   lcd.setCursor(0, 3);
@@ -13,9 +13,9 @@ void menuSelct1() {
 void menuSelct2() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print(" Time/Date");
+  lcd.print(" Heure/Date");
   lcd.setCursor(0, 1);
-  lcd.print(">information");
+  lcd.print(">Information GPS");
   lcd.setCursor(0, 2);
   lcd.print(" Nouveau Trajet");
   lcd.setCursor(0, 3);
@@ -25,9 +25,9 @@ void menuSelct2() {
 void menuSelct3() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print(" Time/Date");
+  lcd.print(" Heure/Date");
   lcd.setCursor(0, 1);
-  lcd.print(" information");
+  lcd.print(" Information GPS");
   lcd.setCursor(0, 2);
   lcd.print(">Nouveau Trajet");
   lcd.setCursor(0, 3);
@@ -37,9 +37,9 @@ void menuSelct3() {
 void menuSelct4() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print(" Time/Date");
+  lcd.print(" Heure/Date");
   lcd.setCursor(0, 1);
-  lcd.print(" information");
+  lcd.print(" Information GPS");
   lcd.setCursor(0, 2);
   lcd.print(" Nouveau Trajet");
   lcd.setCursor(0, 3);
@@ -146,4 +146,13 @@ void menuSelct11() {
   }
   lcd.setCursor(0, 3);
   lcd.print(" ");
+}
+
+void menuparam1() {
+  lcd.setCursor(0, 0);
+  lcd.print(" Changer code");
+  lcd.setCursor(0, 1);
+  lcd.print(" Changer heure");
+  lcd.setCursor(0, 2);
+  lcd.print(" Redemarrer");
 }

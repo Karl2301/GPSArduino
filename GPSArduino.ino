@@ -34,15 +34,15 @@
 #include <LiquidCrystal_I2C.h>
 #include <SPI.h>                        // bibliothèque bus SPI
 #include <SD.h>
+#include <DHT.h>
 #include <IRremote.h>
 #include "variable.h"
 #include <stdint.h>
-#include <DHT.h>
 
 #define MaxMenu 11
 #define GPSECHO  false
 #define delayled 100
-#define brocheDeBranchementDHT 8    // La ligne de communication du DHT22 sera donc branchée sur la pin D6 de l'Arduino
+#define brocheDeBranchementDHT 2   // La ligne de communication du DHT22 sera donc branchée sur la pin D6 de l'Arduino
 #define typeDeDHT DHT11
 
 LiquidCrystal_I2C lcd(0x27, 20, 4);
@@ -63,7 +63,6 @@ void setup()
   digitalWrite(redPin, HIGH);
   digitalWrite(bluePin, HIGH);
   digitalWrite(greenPin, HIGH);
-  Serial.println("LED:      OK");
 
   // init le lcd
   lcd.init();
@@ -71,18 +70,16 @@ void setup()
   lcd.backlight();
   lcd.setCursor(3, 1);
   lcd.print("GPS Tracker V3");
-  Serial.println("LCD:      OK");
-  //init GPS
+
+  //init gps
   Serial3.begin(9600);
-  Serial.println("GPS:      OK");
-  delay(1000);
+
+  // Initialisation du DHT22;
+  dht.begin();
+
   //init IR
   receiver.enableIRIn();
   receiver.blink13(true);
-  Serial.println("IR:       OK");
-  //init DHT22
-  dht.begin();
-
   //on vérifie si la carte SD est bien la
   if (!SD.begin(chipSelect)) {
     Serial.println(F("SD absente ou HS. stop."));
@@ -97,19 +94,19 @@ void setup()
       delay(500);
     }
   }
-  Serial.println("SD:       OK");
   bleu();
-
   //on lit et stocke le mot de passe dans le fichier /p/code.txt
   String codegps = SD.open("p/code.txt", FILE_READ).readStringUntil('\r');
   codeverif = codegps;
+
   String heureutc = SD.open("p/heure.txt", FILE_READ).readStringUntil('\r');
   nbrheure = heureutc.toInt();
+
   lonDesti = SD.open("p/d/lon.txt", FILE_READ).readStringUntil('\r');
+
   latDesti = SD.open("p/d/lat.txt", FILE_READ).readStringUntil('\r');
+
   String trajetencour = SD.open("p/t/tjtcour.txt", FILE_READ).readStringUntil('\r');
-  Serial.println("Data:     OK");
-  Serial.println("List:     OK");
   if (trajetencour != 0) {
     trajet = 2;
     nameFile = trajetencour;
@@ -120,6 +117,7 @@ void setup()
   }
 
   //on compte le nombre de fichier dans la carte sd
+  Serial.println(codegps);
   nbFichiers = compteNbFichiers();
   Serial.print(nbFichiers);  Serial.println(F(" fichiers à la racine"));
   Serial.print(nbFichiers); Serial.print(F("\t"));
@@ -132,6 +130,7 @@ void setup()
   nomFichier = affiFichier(noFichier);  // affichage nom fichier indexé par noFichier > 0
   Serial.print(noFichier); Serial.print(F("\t"));
   Serial.println(nomFichier);
+
   lcd.clear();
 
   if (code == 0) {
@@ -152,28 +151,25 @@ void loop()                     // run over and over again
   if (code == 1) {
     IR();
     if (millis() - timerdht > 2000) {  //oute les 1secondes on fait une action
-      timerdht = millis(); // reset the timer
-      float tauxHumidite = dht.readHumidity();              // Lecture du taux d'humidité (en %)
-      float temperatureEnCelsius = dht.readTemperature();   // Lecture de la température, exprimée en degrés Celsius
+       float tauxHumidite = dht.readHumidity();              // Lecture du taux d'humidité (en %)
+        float temperatureEnCelsius = dht.readTemperature();   // Lecture de la température, exprimée en degrés Celsius
+      if (!isnan(tauxHumidite) || !isnan(temperatureEnCelsius)) {
+        timerdht = millis(); // reset the timer
 
-      // Vérification si données bien reçues
-      if (isnan(tauxHumidite) || isnan(temperatureEnCelsius)) {
-        Serial.println("Aucune valeur retournée par le DHT22. Est-il bien branché ?");
-        delay(2000);
-        return;         // Si aucune valeur n'a été reçue par l'Arduino, on attend 2 secondes, puis on redémarre la fonction loop()
+        // Vérification si données bien reçues
+
+        // Calcul de la température ressentie
+        float temperatureRessentieEnCelsius = dht.computeHeatIndex(temperatureEnCelsius, tauxHumidite, false); // Le "false" est là pour dire qu'on travaille en °C, et non en °F
+
+        // Affichage des valeurs
+        Serial.print("Humidité = "); Serial.print(tauxHumidite); Serial.println(" %");
+        Serial.print("Température = "); Serial.print(temperatureEnCelsius); Serial.println(" °C");
+        Serial.print("Température ressentie = "); Serial.print(temperatureRessentieEnCelsius); Serial.println(" °C");
+        Serial.println();
+        t = temperatureEnCelsius;
+        h = tauxHumidite;
+        tr = temperatureRessentieEnCelsius;
       }
-
-      // Calcul de la température ressentie
-      float temperatureRessentieEnCelsius = dht.computeHeatIndex(temperatureEnCelsius, tauxHumidite, false); // Le "false" est là pour dire qu'on travaille en °C, et non en °F
-
-      // Affichage des valeurs
-      Serial.print("Humidité = "); Serial.print(tauxHumidite); Serial.println(" %");
-      Serial.print("Température = "); Serial.print(temperatureEnCelsius); Serial.println(" °C");
-      Serial.print("Température ressentie = "); Serial.print(temperatureRessentieEnCelsius); Serial.println(" °C");
-      Serial.println();
-      t = temperatureEnCelsius;
-      tr = temperatureRessentieEnCelsius;
-      h = tauxHumidite;
     }
     //on récupère les info du gps
     while (Serial3.available() > 0)
@@ -291,11 +287,6 @@ void loop()                     // run over and over again
         if (menuselector == 1) {
           menutimedate1();
         } else if (menuselector == 2) {
-          if(infogps < 0) {
-            infogps == 1;
-          }else if(infogps > 3) {
-            infogps = 3;
-          }
           if (infogps == 1) {
             menuinfogps1();
           } else if (infogps == 2) {
@@ -317,7 +308,7 @@ void print_wday(byte wday)
 {
   switch (wday)
   {
-    // jours
+
     case 1:  Serial.print("Dimanche"); jour = "Dimanche";  break;
     case 2:  Serial.print("Lundi"); jour = "Lundi";  break;
     case 3:  Serial.print("Mardi"); jour = "Mardi";  break;
@@ -325,9 +316,9 @@ void print_wday(byte wday)
     case 5:  Serial.print("Jeudi"); jour = "Jeudi";  break;
     case 6:  Serial.print("Vendredi"); jour = "Vendredi";  break;
     default: Serial.print("Samedi"); jour = "Samedi";
+
   }
 
 }
 
-//reset
 void(* resetFunc) (void) = 0;

@@ -6,6 +6,8 @@ float calcule_distance(float old_lat, float old_lon, float new_lat, float new_lo
   float midLat, midLon;
   float dist = 0.0;
   
+  
+  //convertion des valeures du degree vers le radian
   latRad = old_lat* 0.017453293;
   lonRad = old_lon* 0.017453293;
   tlatRad = new_lat * 0.017453293;
@@ -20,7 +22,8 @@ float calcule_distance(float old_lat, float old_lon, float new_lat, float new_lo
   
   dist = 2 * asin(sqrt((latSin*latSin) + cos(latRad) * cos(tlatRad) * (lonSin * lonSin)));
   
-  dist = dist * 6371; 
+  dist = dist * 6371; // pour la distance en Km il faut multiplier la valeure trouvée par le rayon de la terre
+  
   return dist;
   
 }

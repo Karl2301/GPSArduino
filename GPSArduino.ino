@@ -150,9 +150,17 @@ void loop()                     // run over and over again
 {
   if (code == 1) {
     IR();
+    //on récupère les info du gps
+    while (Serial3.available() > 0)
+      if (gps.encode(Serial3.read()))
+        if (millis() > 5000 && gps.charsProcessed() < 10)
+        {
+          Serial.println(F("No GPS detected: check wiring."));
+        }
+
     if (millis() - timerdht > 2000) {  //oute les 1secondes on fait une action
-       float tauxHumidite = dht.readHumidity();              // Lecture du taux d'humidité (en %)
-        float temperatureEnCelsius = dht.readTemperature();   // Lecture de la température, exprimée en degrés Celsius
+      float tauxHumidite = dht.readHumidity();              // Lecture du taux d'humidité (en %)
+      float temperatureEnCelsius = dht.readTemperature();   // Lecture de la température, exprimée en degrés Celsius
       if (!isnan(tauxHumidite) || !isnan(temperatureEnCelsius)) {
         timerdht = millis(); // reset the timer
 
@@ -171,13 +179,7 @@ void loop()                     // run over and over again
         tr = temperatureRessentieEnCelsius;
       }
     }
-    //on récupère les info du gps
-    while (Serial3.available() > 0)
-      if (gps.encode(Serial3.read()))
-        if (millis() > 5000 && gps.charsProcessed() < 10)
-        {
-          Serial.println(F("No GPS detected: check wiring."));
-        }
+
     if (gps.satellites.value() > 3) {
       if (gps.satellites.value() <= 4) { //on afficher une petite bar en haut a droit de l'ecrans
         satconnection = 1;
@@ -244,7 +246,7 @@ void loop()                     // run over and over again
       Serial.print(TRAJET);//on affiche la date
       Serial.println();
       if (gps.satellites.value() > 3) {   //si le GPS est connecter aux satelites
-        if (gps.location.lat() == 0.0 && gps.location.lng() == 0.0) {
+        if (gps.location.lat() != 0 && gps.location.lng() != 0) {
           Serial.print("Location: ");
           Serial.print(gps.location.lat(), 15); //on affiche la latitude
           Serial.print(", ");

@@ -1,5 +1,8 @@
 void IR() {
   if (receiver.decode(&results)) { // decode the received signal and store it in results
+    if (results.value == 0xFFFFFFFF) { // if the value is equal to 0xFFFFFFFF
+      results.value = key_value; // set the value to the key value
+    }
     switch (results.value) { // compare the value to the following cases
       case 0xFFA25D: // if the value is equal to 0xFD00FF
         if (blacklight == 1) {
@@ -9,7 +12,7 @@ void IR() {
             rafmenu();
           } else if (menuselector == 2) {
             infogps --;
-            if(infogps < 1) {
+            if (infogps < 1) {
               infogps = 1;
             }
           } else if (menuselector == 3) {
@@ -31,14 +34,11 @@ void IR() {
             }
           } else if (menuselector == 10) {
             nbrheure --;
-            if (nbrheure > 12) {
-              nbrheure = 12;
-            } else if (nbrheure < -12) {
+            if (nbrheure == -13) {
               nbrheure = -12;
             }
             heureUTC();
             SD.remove("/p/heure.txt");
-            delay(500);
             myFile = SD.open("/p/heure.txt", FILE_WRITE);
             myFile.print(nbrheure);
             myFile.close();
@@ -156,7 +156,7 @@ void IR() {
             rafmenu();
           } else if (menuselector == 2) {
             infogps ++;
-            if(infogps > 3) {
+            if (infogps > 3) {
               infogps = 3;
             }
           } else if (menuselector == 6) {
@@ -176,14 +176,11 @@ void IR() {
             }
           } else if (menuselector == 10) {
             nbrheure ++;
-            if (nbrheure > 12) {
+            if (nbrheure == 13) {
               nbrheure = 12;
-            } else if (nbrheure < -12) {
-              nbrheure = -12;
             }
             heureUTC();
             SD.remove("/p/heure.txt");
-            delay(500);
             myFile = SD.open("/p/heure.txt", FILE_WRITE);
             myFile.print(nbrheure);
             myFile.close();
@@ -844,6 +841,7 @@ void IR() {
         }
         break;
     }
+    key_value = results.value ;
     receiver.resume(); // réinitialise le récepteur pour le code suivant
   }
   if (menuselector == 9) {

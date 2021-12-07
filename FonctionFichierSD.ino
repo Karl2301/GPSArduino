@@ -32,7 +32,7 @@ void finish_file() {
   myFile.println("<Style>");
   myFile.println("<LineStyle>");
   myFile.println("<color>##F1C40F</color>");
-  myFile.println("<width>5</width>");
+  myFile.println("<width>10</width>");
   myFile.println("</LineStyle>");
   myFile.println("</Style>");
   myFile.println("</Placemark>");

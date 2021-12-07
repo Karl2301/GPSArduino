@@ -119,3 +119,4 @@ int MaxSat = 0;
 float h;
 float t;
 float tr;
+int waitheure;

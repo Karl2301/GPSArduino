@@ -1,10 +1,9 @@
 void IR() {
   if (receiver.decode(&results)) { // decode the received signal and store it in results
-    if (results.value == 0xFFFFFFFF) { // if the value is equal to 0xFFFFFFFF
-      results.value = key_value; // set the value to the key value
-    }
+    Serial.println(results.value, HEX);
+    Serial.println("test passé");
     switch (results.value) { // compare the value to the following cases
-      case 0xFFA25D: // if the value is equal to 0xFD00FF
+      case 0x40538CFF: // if the value is equal to 0xFD00FF
         if (blacklight == 1) {
           Serial.println("CH-"); // print "POWER" in the Serial Monitor
           if (menuselector == 0) {
@@ -14,6 +13,13 @@ void IR() {
             infogps --;
             if (infogps < 1) {
               infogps = 1;
+            }
+            if (infogps == 1) {
+              menuinfogps1();
+            } else if (infogps == 2) {
+              menuinfogps2();
+            } else if (infogps == 3) {
+              menuinfogps3();
             }
           } else if (menuselector == 3) {
             trajet = 0;
@@ -48,12 +54,13 @@ void IR() {
           lcd.backlight();
         }
         break;
-      case 0xFF629D:
+      case 0x40538DFE:
         if (blacklight == 1) {
           Serial.println("CH");
           if (menuselector == 0) {
             if (menu == 1) {
               menuselector = 1;
+              menutimedate1();
             } else if (menu == 2) {
               menuselector = 2;
             } else if (menu == 3) {
@@ -122,8 +129,8 @@ void IR() {
                 menuselector = 0;
               }
             } else if (menu == 8) {
-              nbrdecharlat = 0;
-              nbrpointlat = 0;
+              //nbrdecharlat = 0;
+              //nbrpointlat = 0;
               menuselector = 8;
             } else if (menu == 9) {
               menuselector = 9;
@@ -140,6 +147,15 @@ void IR() {
                 trajet = 2;
                 menuSelct11();
               }
+            } else if (menu == 12) {
+              menuselector = 12;
+              if (nouvtel == 0) {
+                nouvtel = 1;
+                delay(500);
+                numeroenter();
+              } else {
+
+              }
             }
           }
         } else {
@@ -147,7 +163,8 @@ void IR() {
           lcd.backlight();
         }
         break;
-      case 0xFFE21D:
+      case 0x405384F7:
+
         Serial.println("CH+");
         if (blacklight == 1) {
           lcd.clear();
@@ -158,6 +175,13 @@ void IR() {
             infogps ++;
             if (infogps > 3) {
               infogps = 3;
+            }
+            if (infogps == 1) {
+              menuinfogps1();
+            } else if (infogps == 2) {
+              menuinfogps2();
+            } else if (infogps == 3) {
+              menuinfogps3();
             }
           } else if (menuselector == 6) {
             menuparam = 2;
@@ -190,7 +214,7 @@ void IR() {
           lcd.backlight();
         }
         break;
-      case 0xFF22DD:
+      case 0x40538BF8:
         if (blacklight == 1) {
           Serial.println("|<<");
           if (menuselector != 0) {
@@ -202,14 +226,16 @@ void IR() {
             menuselectorlcd = 0;
             menuselectortrajet = 0;
             menuparametre = 0;
-
+            decalecatam = 0;
+            numtelenter = 0;
+            nouvtel = 0;
           }
         } else {
           blacklight = 1;
           lcd.backlight();
         }
         break;
-      case 0xFFC23D:
+      case 0x40538605:
         if (blacklight == 1) {
           Serial.println(">||");
         } else {
@@ -217,7 +243,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFF02FD:
+      case 0x405383F0:
         if (blacklight == 1) {
           Serial.println(">>|");
           if (menuselector == 8) {
@@ -256,7 +282,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFFE01F:
+      case 0x40538211:
         if (blacklight == 1) {
           Serial.println("VOL-");
           if (menuselector == 8) {
@@ -287,12 +313,14 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFF906F:
+      case 0x40508C1C:
         if (blacklight == 1) {
           Serial.println("EQ");
           if (menuselector == 5 && nbFichiers != 0) {
-            String removefile = "/trajet/" + nomFichier;
+            String removefile = "/trajet/nomfich/" + nomFichier;
             SD.remove(removefile);
+            String removefolder = "/trajet/kmlfile/" + nameFile + "/";
+            SD.rmdir(removefolder);
             nbFichiers = nbFichiers - 1;
             compterfichier();
             lcd.clear();
@@ -334,7 +362,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFF6897:
+      case 0x4053898A:
         if (blacklight == 1) {
           Serial.println("0");
           if (menuselector == 8) {
@@ -399,7 +427,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFF30CF:
+      case 0x40538083:
         if (blacklight == 1) {
           Serial.println("1");
           if (menuselector == 8) {
@@ -448,7 +476,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFF18E7:
+      case 0x4053888B:
         if (blacklight == 1) {
           Serial.println("2");
           if (menuselector == 8) {
@@ -497,7 +525,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFF7A85:
+      case 0x40538487:
         if (blacklight == 1) {
           Serial.println( "3" ) ;
           if (menuselector == 8) {
@@ -546,7 +574,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case 0xFF10EF:
+      case 0x40538C8F:
         if (blacklight == 1) {
           Serial.println( "4" ) ;
           if (menuselector == 8) {
@@ -595,7 +623,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case  0xFF38C7 :
+      case  0x40538281 :
         if (blacklight == 1) {
           Serial.println( "5" ) ;
           if (menuselector == 8) {
@@ -644,7 +672,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case  0xFF5AA5 :
+      case  0x40538A89 :
         if (blacklight == 1) {
           Serial.println( "6" ) ;
           if (menuselector == 8) {
@@ -693,7 +721,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case  0xFF42BD :
+      case  0x40538685 :
         if (blacklight == 1) {
           Serial.println( "7" ) ;
           if (menuselector == 8) {
@@ -742,7 +770,7 @@ void IR() {
           lcd.backlight();
         }
         break ;
-      case  0xFF4AB5 :
+      case  0x40538E8D :
         if (blacklight == 1) {
           Serial.println( "8" ) ;
           if (menuselector == 8) {
@@ -791,7 +819,7 @@ void IR() {
           lcd.backlight();
         }
         break;
-      case  0xFF52AD :
+      case  0x40538182 :
         if (blacklight == 1) {
           Serial.println( "9" ) ;
           if (menuselector == 8) {
@@ -840,9 +868,10 @@ void IR() {
           lcd.backlight();
         }
         break;
-    }
+    } 
+    // réinitialise le récepteur pour le code suivant
     key_value = results.value ;
-    receiver.resume(); // réinitialise le récepteur pour le code suivant
+    receiver.resume();
   }
   if (menuselector == 9) {
     if (comptenumcode == 0) {

@@ -5,39 +5,39 @@ void menudistance1() {
   lcd.setCursor(0, 1);
   lcd.print("lat: ");
   if (distancechoix == 1) {
-    if (latDesti == 0) {
-      lcd.print(">Definir<");
-    } else {
-      lcd.setCursor(5, 1);
-      lcd.print(">");
-      lcd.setCursor(6, 2);
-      lcd.print(latDesti);
-    }
-  } else {
-    if (latDesti == 0) {
-      lcd.print(" Definir");
-    } else {
-      lcd.setCursor(6, 2);
-      lcd.print(latDesti);
-    }
-  }
-  lcd.setCursor(0, 2);
-  lcd.print("lon: ");
-  if (distancechoix == 1) {
-    if (lonDesti == 0) {
+    if (lonDesti == "") {
       lcd.print(" Definir");
     } else {
       lcd.setCursor(6, 2);
       lcd.print(lonDesti);
     }
   } else {
-    if (lonDesti == 0) {
+    if (lonDesti == "") {
       lcd.print(">Definir<");
     } else {
       lcd.setCursor(5, 2);
       lcd.print(">");
       lcd.setCursor(6, 2);
       lcd.print(lonDesti);
+    }
+  }
+  lcd.setCursor(0, 2);
+  lcd.print("lat: ");
+  if (distancechoix == 2) {
+    if (latDesti == "") {
+      lcd.print(" Definir");
+    } else {
+      lcd.setCursor(6, 2);
+      lcd.print(latDesti);
+    }
+  } else {
+    if (latDesti == "") {
+      lcd.print(">Definir<");
+    } else {
+      lcd.setCursor(5, 2);
+      lcd.print(">");
+      lcd.setCursor(6, 2);
+      lcd.print(latDesti);
     }
   }
 

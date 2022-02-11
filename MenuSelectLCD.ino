@@ -109,7 +109,7 @@ void menuSelct9() {
     lcd.print(" Pas de trajet");
   }
   lcd.setCursor(0, 3);
-  lcd.print(" ");
+  lcd.print(" Nouvelle tel.");
 }
 
 void menuSelct10() {
@@ -127,7 +127,7 @@ void menuSelct10() {
     lcd.print(" Pas de trajet");
   }
   lcd.setCursor(0, 3);
-  lcd.print(" ");
+  lcd.print(" Nouvelle tel.");
 }
 
 void menuSelct11() {
@@ -145,14 +145,23 @@ void menuSelct11() {
     lcd.print(">Pas de trajet");
   }
   lcd.setCursor(0, 3);
-  lcd.print(" ");
+  lcd.print(" Nouvelle tel.");
 }
 
-void menuparam1() {
+void menuSelct12() {
+  lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print(" Changer code");
   lcd.setCursor(0, 1);
   lcd.print(" Changer heure");
   lcd.setCursor(0, 2);
-  lcd.print(" Redemarrer");
+  if (trajet == 2) {
+    lcd.print(" Pause trajet");
+  } else if (trajet == 4) {
+    lcd.print(" Reprendre trajet");
+  } else if (trajet == 0) {
+    lcd.print(" Pas de trajet");
+  }
+  lcd.setCursor(0, 3);
+  lcd.print(">Nouvelle tel.");
 }

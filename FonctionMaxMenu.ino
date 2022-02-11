@@ -27,6 +27,8 @@ void rafmenu() {
       menuSelct10();
     }else if (menu == 11) {
       menuSelct11();
+    }else if (menu == 12) {
+      menuSelct12();
     }
   }
 }

@@ -1,4 +1,3 @@
-
 float calcule_distance(float old_lat, float old_lon, float new_lat, float new_lon)
 {
   float latRad, lonRad;

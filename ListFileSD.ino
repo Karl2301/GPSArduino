@@ -1,7 +1,7 @@
 uint16_t compteNbFichiers()
 {
   uint16_t n = 0;
-  File dossier = SD.open("/trajet/");
+  File dossier = SD.open("/trajet/nomfich/");
   File fichier;
 
   if (dossier) {
@@ -9,7 +9,16 @@ uint16_t compteNbFichiers()
 
     while (fichier = dossier.openNextFile()) {
       //verifier si c'est un repertoire
-      n++;
+      Serial.println(fichier.name());
+      String filenameverif = fichier.name();
+      int dtctiretdubas = filenameverif.indexOf("_");
+      Serial.print("dtctiretdubas: "); Serial.println(dtctiretdubas);
+      if (dtctiretdubas == 0) {
+        n++;
+      } else if (SD.remove(fichier.name())) {
+        Serial.println(fichier.name());
+      }
+
       fichier.close(); // on ferme celui là
     }
     dossier.close();
@@ -28,7 +37,7 @@ const char * affiFichier(uint16_t num) {
   static char nomDuFichier[maxFileLength + 1];
   nomDuFichier[0] = '\0'; // initialisé à vide
 
-  File dossier = SD.open("/trajet/");
+  File dossier = SD.open("/trajet/nomfich/");
   dossier.rewindDirectory(); // on se met au début
   File fichier;
 
@@ -39,7 +48,7 @@ const char * affiFichier(uint16_t num) {
         n++; // on se souvient où on est
         if (n == num) { // si on a trouvé le bon, on copie son nom
           strncpy(nomDuFichier, fichier.name(), maxFileLength);
-          //nomDuFichier[maxFileLength] = '\0'; // par précaution si le nom était trop long
+          nomDuFichier[maxFileLength] = '\0'; // par précaution si le nom était trop long
           octetFile = fichier.size();
           Serial.print(fichier.name());
           Serial.print(" ");

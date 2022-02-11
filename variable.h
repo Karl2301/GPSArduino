@@ -55,7 +55,7 @@ byte tiretdehaut[] = {
 
 static const int RXPin = 4, TXPin = 5;
 static const uint32_t GPSBaud = 9600;
- 
+
 const int redPin = 10;
 const int greenPin = 9;
 const int bluePin = 11;
@@ -116,6 +116,23 @@ int calculeladistance = 0;
 float distanceparcouru = 0.0;
 int nbrheure;
 int MaxSat = 0;
+int MaxSpeed = 0;
+int MaxAlt = 0;
 float h;
 float t;
 float tr;
+int waitheure;
+String IRdatatel = "";
+int numtel = 1;
+int numfiletel = 1;
+int numtelenter = 1;
+int nouvtel = 0;
+int tablefinish = 0;
+int compteTemps = 0;
+int secondeTrajet = 0;
+int minuteTrajet = 0;
+int heureTrajet = 0;
+int jourTrajet = 0;
+//                         0    1    2    3    4    5    6    7    8    9    10   11   12   13   14   15   16   17   18
+String tablenewtel[19] = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
+int decalecatam = 0;

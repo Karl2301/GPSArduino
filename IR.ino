@@ -1,41 +1,5 @@
 void IR() {
   if (receiver.decode(&results)) { // decode the received signal and store it in results
-    /*
-      if (results.value == key_value) { // if the value is equal to 0xFFFFFFFF
-      results.value = key_value; // set the value to the key value
-      }
-    */
-
-    /*
-      String codetele = String(results.value, HEX);
-      int indexcomparaison = IRdatatel.indexOf(codetele);
-      Serial.print("codetele: "); Serial.println(codetele);
-      Serial.print("comparaison: "); Serial.println(codetele);
-      Serial.print("IndexOf: "); Serial.println(indexcomparaison);
-      if (IRdatatel.indexOf(codetele) == -1) {
-      if (nouvtel == 1) {
-        if (menuselector == 12) {
-          Serial.println("Debut de lecture");
-          delay(100);
-          //on ecrit les information ici
-          String decalecatamstr = String(decalecatam);
-          tablenewtel[decalecatam] = decalecatamstr;
-          Serial.print("Écriture des données dans la cases "); Serial.println(decalecatam + 1);
-          numtelenter ++;
-          numeroenter();
-          decalecatam = decalecatam + 1;
-          Serial.println("Passage au suivant");
-
-          if (decalecatam == 19) {
-            numtelenter = 20;
-            numeroenter();
-            nouvtel = 0;
-            Serial.println("Fin de l'enregistrement des toouches");
-          }
-        }
-      }
-      }
-    */
     Serial.println(results.value, HEX);
     Serial.println("test passé");
     switch (results.value) { // compare the value to the following cases

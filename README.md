@@ -1,6 +1,7 @@
 # GPSArduino
 
       Module / Arduino mega
+      
       LCD:
       VCC       5v
       SCL       SCL
